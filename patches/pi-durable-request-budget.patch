@@ -1,0 +1,140 @@
+diff --git a/packages/durable/README.md b/packages/durable/README.md
+index 3d21a80..dc556f8 100644
+--- a/packages/durable/README.md
++++ b/packages/durable/README.md
+@@ -773,7 +773,7 @@ const Guard = defineExtension({
+ });
+ ```
+ 
+-- **Generation:** `beforeRequest` (replace the messages of one request), `beforeProviderRequest` (replace the provider request body of one request, e.g. to set a provider-specific field), `afterResponse`, `onYield` (continue the run with another user message, or tasks that decide whether the answer stands), `afterTools` (runs once a round's tools are done; may return tasks to run before the round ends), and `afterRun` (tasks to run before the run ends). Tasks are built with `hookTask()` (below).
++- **Generation:** `beforeRequest` (replace request messages, or return `{ messages, compact: true }` to run durable compaction once before dispatch and prepare again), `beforeProviderRequest` (replace the provider request body of one request, e.g. to set a provider-specific field), `afterResponse`, `onYield` (continue the run with another user message, or tasks that decide whether the answer stands), `afterTools` (runs once a round's tools are done; may return tasks to run before the round ends), and `afterRun` (tasks to run before the run ends). Tasks are built with `hookTask()` (below).
+ - **Tools:** `beforeTool` (block, rewrite arguments, or make the call wait, below) and `afterTool` (replace the result). `afterTool` sees every result a tool task writes, also the error results the Harness writes itself (unavailable, invalid, blocked, interrupted, restart limit, aborted), told apart by their diagnostic code; past `settings.restartLimit` it no longer runs. On an abort it runs inside the abort handler, so a slow hook delays `abort()`.
+ 
+ To limit a hook to some conversations, select its extension only there, for example with `configure({ extensions: { add: [Guard] } })`.
+diff --git a/packages/durable/src/harness/generation.ts b/packages/durable/src/harness/generation.ts
+index 0ba447c..334cb64 100644
+--- a/packages/durable/src/harness/generation.ts
++++ b/packages/durable/src/harness/generation.ts
+@@ -309,10 +309,29 @@ export const GenerationTask = defineTask<GenerationInput, GenerationCheckpoint,
+ 			if (model === undefined) return failNoModel(runtime, ref, context);
+ 			const view = await runtime.context(conversationId, context, { at: cutoff });
+ 			let messages = view.messages;
++			let compact = false;
+ 			await runtime.hooks.each("beforeRequest", async (hook) => {
+ 				const replaced = await hook({ messages }, runtime, context);
+-				if (replaced !== undefined) messages = replaced.messages;
++				if (replaced !== undefined) {
++					messages = replaced.messages;
++					compact ||= replaced.compact === true;
++				}
+ 			});
++			if (compact) {
++				const reason = "Request exceeds the host's message or byte budget";
++				if (compacted !== undefined) return failModelError(runtime, reason, context);
++				await runtime.commit(async (tx): Promise<Next> => {
++					delete (await tx.doc(LiveDoc, conversationId)).generation;
++					const child = await createCompaction(tx, conversationId, { reason: "threshold" }, runtime.taskId);
++					return {
++						status: "waiting",
++						checkpoint: { phase: "prepare", attempt, compacted: child, overflow: reason },
++						on: [child],
++						policy: "allSettled",
++					};
++				}, context);
++				return;
++			}
+ 			const options: SimpleStreamOptions = {
+ 				...streamOptions,
+ 				signal: runtime.signal,
+diff --git a/packages/durable/src/harness/types.ts b/packages/durable/src/harness/types.ts
+index 9ec7348..f5d68f5 100644
+--- a/packages/durable/src/harness/types.ts
++++ b/packages/durable/src/harness/types.ts
+@@ -1097,12 +1097,12 @@ export type HookResult<T> = T | undefined | Promise<T | undefined>;
+ 
+ /** Hooks of the built-in generation task. */
+ export interface GenerationHooks {
+-	/** Before every request attempt, including recovery; the result is used for that request only. */
++	/** Before every request attempt; compact asks the durable loop to compact once and prepare again before dispatch. */
+ 	beforeRequest(
+ 		request: { readonly messages: readonly Message[] },
+ 		api: HookApi,
+ 		context: Context,
+-	): HookResult<{ readonly messages: readonly Message[] }>;
++	): HookResult<{ readonly messages: readonly Message[]; readonly compact?: true }>;
+ 	/**
+ 	 * After pi-ai builds the provider request body, before it is sent; the result replaces the body for that request only.
+ 	 * Runs again whenever pi-ai rebuilds the body, such as a retry within one attempt. The body is in the provider API's
+diff --git a/packages/durable/test/harness-compaction.test.ts b/packages/durable/test/harness-compaction.test.ts
+index 5ab681d..c54197a 100644
+--- a/packages/durable/test/harness-compaction.test.ts
++++ b/packages/durable/test/harness-compaction.test.ts
+@@ -13,6 +13,7 @@ import {
+ } from "@earendil-works/pi-ai";
+ import {
+ 	AgentDoc,
++	AssistantEntry,
+ 	type CompactionPolicy,
+ 	type CompactionResult,
+ 	type CompactionSettings,
+@@ -24,6 +25,7 @@ import {
+ 	defineTask,
+ 	defineTool,
+ 	type EntryRecord,
++	GenerationTask,
+ 	type Harness,
+ 	type JsonObject,
+ 	LiveDoc,
+@@ -33,6 +35,7 @@ import {
+ 	type SubmissionId,
+ 	type TaskId,
+ 	UsageDoc,
++	UserEntry,
+ } from "@earendil-works/pi-durable";
+ import { obj } from "@earendil-works/pi-schema";
+ import { afterEach, describe, expect, it } from "vitest";
+@@ -125,6 +128,44 @@ const failure = (errorMessage: string) => fauxAssistantMessage("", { stopReason:
+ 
+ const OVERFLOW = "prompt is too long: 250000 tokens > 200000 maximum";
+ 
++describe("request budget compaction", () => {
++	it("compacts a low-token history before a host message limit is exceeded", async () => {
++		const chat = await open({
++			policy: { enabled: true, reserveTokens: 1000, keepRecentTokens: 128, backgroundTokens: 0 },
++		});
++		await chat.root.commit(async (tx) => {
++			for (let index = 0; index < 70; index++) {
++				await tx.appendEntry(UserEntry, chat.root.id, {
++					model: [{ role: "user", content: `short ${index}`, timestamp: 0 }],
++				});
++				await tx.appendEntry(AssistantEntry, chat.root.id, { model: [fauxAssistantMessage("ok")] });
++			}
++		}, context);
++		addHooks(chat.setup.registry, GenerationTask, {
++			beforeRequest: ({ messages }) => (messages.length > 96 ? { messages, compact: true } : undefined),
++		});
++		chat.faux.summaries.push(fauxAssistantMessage("Earlier short exchanges completed."));
++		chat.faux.agent.push(({ messages }) => {
++			expect(messages.length).toBeLessThanOrEqual(96);
++			expect(
++				messages.some((message) =>
++					(typeof message.content === "string"
++						? message.content
++						: message.content.flatMap((part) => (part.type === "text" ? [part.text] : [])).join("")
++					).includes("Earlier short exchanges completed."),
++				),
++			).toBe(true);
++			return fauxAssistantMessage("continued");
++		});
++		const submitted = await chat.root.submit({ type: "input", content: "continue" }, context);
++		expect((await submitted.wait(context)).status).toBe("done");
++		expect(chat.faux.summaryRequests).toHaveLength(1);
++		expect(chat.faux.summaryRequests[0]!.messages).toHaveLength(2);
++		expect(chat.faux.agentRequests).toHaveLength(1);
++		await chat.harness.close(context);
++	});
++});
++
+ /** Small thresholds: no automatic compaction unless a test enables it. */
+ const MANUAL: CompactionPolicy = { enabled: false, reserveTokens: 1000, keepRecentTokens: 150, backgroundTokens: 0 };
+ 

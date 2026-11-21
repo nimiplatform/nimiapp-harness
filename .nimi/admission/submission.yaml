@@ -1,0 +1,36 @@
+app_id: ai.nimi.harness
+display_name: Nimi Harness
+version: 0.2.0
+profile: standalone
+npm_package_name: nimiapp-harness
+cargo_package_name: nimiapp-harness-shell
+tauri_identifier: ai.nimi.apps.ai.nimi.harness
+package_author: Nimi Platform
+submission_role: developer-submitted-input
+capability_contract_refs:
+  - text.generate
+  - audio.transcribe
+required_standardized_feature_refs: []
+storage_policy:
+  kind: app-owned-os-storage
+  os_storage_disclosure:
+    - path_pattern: <user-home>/.nimi-harness/**
+      purpose: Account-partitioned session transcripts and working files.
+      expected_size_band: Depends on the size and number of tasks.
+support_manifest:
+  diagnostics_bundle_fields:
+    - app_version
+    - runtime_status
+  redaction_rules:
+    - credentials
+  user_visible_issue_categories:
+    - startup
+    - runtime
+  escalation_path: README.md#support
+  kill_switch_visibility: visible
+  recovery_instructions: Restart the App from Nimi. If the problem persists, reinstall the current admitted release.
+review_inputs:
+  manifest: nimi.app.yaml
+  build_profile: .nimi/config/build-profile.yaml
+  scaffold_boundary: .nimi/contracts/scaffold-boundary.yaml
+admission_truth: platform-owned-after-review

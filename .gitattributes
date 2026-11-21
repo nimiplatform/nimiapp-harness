@@ -1,0 +1,3 @@
+# Preserve the reviewed source license bytes on every checkout platform.
+LICENSE -text
+android/gradlew.bat text eol=crlf

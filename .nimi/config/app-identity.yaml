@@ -1,0 +1,8 @@
+app_id: ai.nimi.harness
+display_name: Nimi Harness
+version: 0.2.0
+npm_package_name: nimiapp-harness
+cargo_package_name: nimiapp-harness-shell
+tauri_identifier: ai.nimi.apps.ai.nimi.harness
+package_author: Nimi Platform
+identity_role: scaffold-generated-authoring-input
