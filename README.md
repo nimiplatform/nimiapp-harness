@@ -4,13 +4,13 @@ Nimi Harness runs a Pi durable conversation in the Desktop-supervised Electron H
 
 ## Development
 
-Use the pinned Pi source artifact set for commit `1f6f319bb28992a40b99c147fffb23b65a23129d` from the adjacent Nimi checkout. `pnpm-workspace.yaml` and `pnpm-lock.yaml` name the exact tarballs. This development baseline uses App Tools `0.16.0-rc.10`, SDK `0.24.0-rc.11`, Kit `0.24.0-rc.16`, and the matching macOS arm64 protected carrier. The SDK preserves resolved tool history and Runtime interruption fields and supports managed file handoffs. Source development loads the protected binding selected by the matching Home.
+This repository builds cleanly from public npm dependencies and a committed pnpm patch:
 
-The pnpm install needs the tarballs at the paths in `pnpm-workspace.yaml`. A standalone checkout, including the generated GitHub Actions job, cannot install until it has those artifacts. Public release preflight requires registry resolutions, so this development dependency set cannot pass it.
+- **Nimi platform baseline**: `@nimiplatform/app-tools@^0.16.0-rc.12`, `@nimiplatform/sdk@^0.24.0-rc.10`, `@nimiplatform/kit@^0.24.0-rc.16`, and `@nimiplatform/nimi-coding@0.7.0`.
+- **Pi durable runtime & request-budget patch**: `@earendil-works/chord`, `@earendil-works/pi-ai`, `@earendil-works/pi-durable`, and `@earendil-works/pi-schema` pinned to `1.6.0`, with `patches/@earendil-works__pi-durable@1.6.0.patch` wired through `pnpm-workspace.yaml` `patchedDependencies` (mirroring the upstream source patch in `patches/pi-durable-request-budget.patch`). This preserves `beforeRequest` durable compaction at 96 messages or 256 KiB of context before the native request envelope while counting images via owned Artifact references.
+- **Note on unpublished SDK 0.24.0-rc.11 features**: `audio.transcribe` scenario jobs currently use the App's default `audio.transcribe` configuration under published `sdk@0.24.0-rc.10` (per-session `configRef` on `createNimiLocalAppRuntimeScenarioJobClient` and Runtime `textBehaviors` cloud-target filtering are ready for when `sdk@0.24.0-rc.11` / matching `kit` publish).
 
-The selected Pi artifact set also includes the local patch in `patches/pi-durable-request-budget.patch`. It lets `beforeRequest` ask the existing durable compaction task to finish before dispatch. The artifact manifest records the source commit and content hashes. The App requests compaction at 96 messages or 256 KiB of context before the native request envelope. Images use Artifact references for this budget. Compaction retains the newest safe turn boundary and summarizes its prefix.
-
-Use Node 24 and run `pnpm install --frozen-lockfile`, `pnpm check`, and `pnpm dev` with the matching Home and Runtime running. To resume a development registration, read the current selector with `pnpm dev -- --list-registrations` and pass it to `pnpm dev -- --resume <selector>`. Use Apps → Nimi Harness → AI models to select an admitted text route. Run `pnpm test` for the App regression suite.
+Use Node 24 and run `pnpm install --frozen-lockfile`, `pnpm exec nimi-app check --production`, `pnpm test`, and `pnpm dev` with a matching Nimi Home and Runtime running. To resume a development registration, read the current selector with `pnpm dev -- --list-registrations` and pass it to `pnpm dev -- --resume <selector>`. Use **Apps → Nimi Harness → AI models** in Nimi Home to select an admitted text route. Run `pnpm run build:web:release` (with `NIMI_WEB_VERSION` and `NIMI_WEB_ARCHIVE`) to produce the hosted Web release bundle.
 
 ## Desktop tasks
 

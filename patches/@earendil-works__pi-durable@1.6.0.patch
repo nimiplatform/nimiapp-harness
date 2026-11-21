@@ -1,0 +1,54 @@
+diff --git a/dist/harness/generation.js b/dist/harness/generation.js
+index 56f3055ab58e51d429f91c90c9286531f3086106..b272eed1024719f01002ce8174d9c698363afe37 100644
+--- a/dist/harness/generation.js
++++ b/dist/harness/generation.js
+@@ -140,11 +140,30 @@ export const GenerationTask = defineTask({
+                 return failNoModel(runtime, ref, context);
+             const view = await runtime.context(conversationId, context, { at: cutoff });
+             let messages = view.messages;
++            let compact = false;
+             await runtime.hooks.each("beforeRequest", async (hook) => {
+                 const replaced = await hook({ messages }, runtime, context);
+-                if (replaced !== undefined)
++                if (replaced !== undefined) {
+                     messages = replaced.messages;
++                    compact ||= replaced.compact === true;
++                }
+             });
++            if (compact) {
++                const reason = "Request exceeds the host's message or byte budget";
++                if (compacted !== undefined)
++                    return failModelError(runtime, reason, context);
++                await runtime.commit(async (tx) => {
++                    delete (await tx.doc(LiveDoc, conversationId)).generation;
++                    const child = await createCompaction(tx, conversationId, { reason: "threshold" }, runtime.taskId);
++                    return {
++                        status: "waiting",
++                        checkpoint: { phase: "prepare", attempt, compacted: child, overflow: reason },
++                        on: [child],
++                        policy: "allSettled",
++                    };
++                }, context);
++                return;
++            }
+             const options = {
+                 ...streamOptions,
+                 signal: runtime.signal,
+diff --git a/dist/harness/types.d.ts b/dist/harness/types.d.ts
+index 7ba2571ffb2594913c2dea1cc809f70da912b947..0c702962a143d834c9704e312909a4b5543d4446 100644
+--- a/dist/harness/types.d.ts
++++ b/dist/harness/types.d.ts
+@@ -1007,11 +1007,12 @@ export interface HookApi extends DocumentReader {
+ export type HookResult<T> = T | undefined | Promise<T | undefined>;
+ /** Hooks of the built-in generation task. */
+ export interface GenerationHooks {
+-    /** Before every request attempt, including recovery; the result is used for that request only. */
++    /** Before every request attempt; compact asks the durable loop to compact once and prepare again before dispatch. */
+     beforeRequest(request: {
+         readonly messages: readonly Message[];
+     }, api: HookApi, context: Context): HookResult<{
+         readonly messages: readonly Message[];
++        readonly compact?: true;
+     }>;
+     /**
+      * After pi-ai builds the provider request body, before it is sent; the result replaces the body for that request only.

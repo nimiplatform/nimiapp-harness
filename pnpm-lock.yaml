@@ -4,45 +4,33 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@earendil-works/chord': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-chord-1.5.2-6d43da90f2bb.tgz
-  '@earendil-works/pi-agent-core': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-agent-core-1.5.2-7a8b5f99be59.tgz
-  '@earendil-works/pi-ai': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-ai-1.5.2-ccbb1a0a849b.tgz
-  '@earendil-works/pi-codemode': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-codemode-1.5.2-1e8650e346bd.tgz
-  '@earendil-works/pi-coding-agent': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-coding-agent-1.5.2-ab939fc20ec7.tgz
-  '@earendil-works/pi-durable': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-durable-1.5.2-9654b8f2a21e.tgz
-  '@earendil-works/pi-env': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-env-1.5.2-13c627c8d363.tgz
-  '@earendil-works/pi-mcp': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-mcp-1.5.2-8f187488f588.tgz
-  '@earendil-works/pi-schema': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-schema-1.5.2-0f11f19266f3.tgz
-  '@earendil-works/pi-telemetry': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-telemetry-1.5.2-9be72e9a322a.tgz
-  '@earendil-works/pi-tui': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-tui-1.5.2-1c4cd23e1921.tgz
-  '@nimiplatform/sdk': file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-sdk-0.24.0-rc.11.tgz
-  '@nimiplatform/kit': file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-0.24.0-rc.16.tgz
-  '@nimiplatform/kit-protected-local-darwin-arm64': file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-protected-local-darwin-arm64-0.24.0-rc.16.tgz
-  '@nimiplatform/app-tools': file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-app-tools-0.16.0-rc.10.tgz
+patchedDependencies:
+  '@earendil-works/pi-durable@1.6.0':
+    hash: 59b7d8092f846c02449b1520cdffc742d7e3071e83cbf29be67871641f2b6428
+    path: patches/@earendil-works__pi-durable@1.6.0.patch
 
 importers:
 
   .:
     dependencies:
       '@earendil-works/chord':
-        specifier: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-chord-1.5.2-6d43da90f2bb.tgz
-        version: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-chord-1.5.2-6d43da90f2bb.tgz(esbuild@0.28.2)(react@19.3.1)(ws@8.23.0)
+        specifier: 1.6.0
+        version: 1.6.0(esbuild@0.28.2)(react@19.3.1)(ws@8.23.0)
       '@earendil-works/pi-ai':
-        specifier: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-ai-1.5.2-ccbb1a0a849b.tgz
-        version: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-ai-1.5.2-ccbb1a0a849b.tgz(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)
+        specifier: 1.6.0
+        version: 1.6.0(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(google-auth-library@10.9.1)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)
       '@earendil-works/pi-durable':
-        specifier: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-durable-1.5.2-9654b8f2a21e.tgz
-        version: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-durable-1.5.2-9654b8f2a21e.tgz(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(esbuild@0.28.2)(react@19.3.1)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)
+        specifier: 1.6.0
+        version: 1.6.0(patch_hash=59b7d8092f846c02449b1520cdffc742d7e3071e83cbf29be67871641f2b6428)(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(esbuild@0.28.2)(google-auth-library@10.9.1)(react@19.3.1)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)
       '@earendil-works/pi-schema':
-        specifier: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-schema-1.5.2-0f11f19266f3.tgz
-        version: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-schema-1.5.2-0f11f19266f3.tgz
+        specifier: 1.6.0
+        version: 1.6.0
       '@nimiplatform/kit':
-        specifier: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-0.24.0-rc.16.tgz
-        version: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-0.24.0-rc.16.tgz(@capacitor/app@8.1.2(@capacitor/core@8.6.0))(@capacitor/browser@8.0.5(@capacitor/core@8.6.0))(@capacitor/core@8.6.0)(@tauri-apps/api@2.12.4)(@types/node@24.19.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(electron@45.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^0.24.0-rc.16
+        version: 0.24.0-rc.16(@capacitor/app@8.1.2(@capacitor/core@8.6.0))(@capacitor/browser@8.0.5(@capacitor/core@8.6.0))(@capacitor/core@8.6.0)(@tauri-apps/api@2.12.4)(@types/node@24.19.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(electron@45.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@nimiplatform/sdk':
-        specifier: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-sdk-0.24.0-rc.11.tgz
-        version: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-sdk-0.24.0-rc.11.tgz(@grpc/grpc-js@1.14.7)
+        specifier: ^0.24.0-rc.10
+        version: 0.24.0-rc.10(@grpc/grpc-js@1.14.7)
       lucide-react:
         specifier: ^1.61.0
         version: 1.61.0(@types/react@19.3.0)(react@19.3.1)
@@ -72,8 +60,8 @@ importers:
         specifier: ^20.3.0
         version: 20.3.0
       '@nimiplatform/app-tools':
-        specifier: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-app-tools-0.16.0-rc.10.tgz
-        version: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-app-tools-0.16.0-rc.10.tgz(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
+        specifier: ^0.16.0-rc.12
+        version: 0.16.0-rc.12(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
       '@nimiplatform/nimi-coding':
         specifier: 0.7.0
         version: 0.7.0
@@ -232,9 +220,8 @@ packages:
   '@capacitor/core@8.6.0':
     resolution: {integrity: sha512-9F2zzuGYTJu+wqmQSEmqnFBfGrhC/njjMCfmxbvg9mq8xJT4wNh5pxbMFZxvW/yDhYJWPEBFQxeqzfo1gKrvxg==}
 
-  '@earendil-works/chord@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-chord-1.5.2-6d43da90f2bb.tgz':
-    resolution: {integrity: sha512-bUPakPK7b1VHbdr2XenuHT7FRLuJpxtq05YzSyX9nByDLhGrwNFmH9mc3Zp3E3Q+cqkJJjYKFF61+ygmIj7esw==, tarball: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-chord-1.5.2-6d43da90f2bb.tgz}
-    version: 1.5.2
+  '@earendil-works/chord@1.6.0':
+    resolution: {integrity: sha512-8dQXEKUR6qQPc4zNEblmv6hEfr2JAAU+nUprt+mhtdfRRZzl1At5ZhnJqTqesElAdR7RpAyaRIAilyteNHzyWA==}
     engines: {node: '>=22.19.0'}
     peerDependencies:
       esbuild: ^0.28.2
@@ -248,30 +235,25 @@ packages:
       ws:
         optional: true
 
-  '@earendil-works/pi-ai@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-ai-1.5.2-ccbb1a0a849b.tgz':
-    resolution: {integrity: sha512-zLsaCoSbqFO4h2ISLketMS+aACFMIHwsBtpTlT8g+LPbp2m3/G/84v3h9yIk9H9UOCx27PVKn97Ft9DCioeCWQ==, tarball: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-ai-1.5.2-ccbb1a0a849b.tgz}
-    version: 1.5.2
+  '@earendil-works/pi-ai@1.6.0':
+    resolution: {integrity: sha512-9hL+eygFDEiFp//cydeUfmFsKmEqpmvsNPb10Y1W8+m5K9O+sx1hMStfu6nukrBD5sl6mP4RykCYBBNEgsVLfw==}
     engines: {node: '>=22.19.0'}
     hasBin: true
 
-  '@earendil-works/pi-codemode@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-codemode-1.5.2-1e8650e346bd.tgz':
-    resolution: {integrity: sha512-HoZQ40a9RgdZ1VgmrX6x8887cNXedaRJT1l+Ie5YRIMK4gY7v0EpsiNqf6dmixrKylZlTgUSyR+vE8xhjfkr+w==, tarball: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-codemode-1.5.2-1e8650e346bd.tgz}
-    version: 1.5.2
+  '@earendil-works/pi-codemode@1.6.0':
+    resolution: {integrity: sha512-GAgAy7iJCVbeiuqq2dTIuNj3aXTMUeTF8Nu8LZs72e8ueGGDU5L3/D8VxzTHALIpQ1/q8u1tfmB3iYS2Nopchw==}
     engines: {node: '>=22.19.0'}
 
-  '@earendil-works/pi-durable@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-durable-1.5.2-9654b8f2a21e.tgz':
-    resolution: {integrity: sha512-llS48qIeqRsliTmkyRFbV5CP/eAWXUzLiEarE7bFty0DqLVhpU60cuw01kXR3qdvjtz0WwLVpo0jzHlR0x0Jsg==, tarball: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-durable-1.5.2-9654b8f2a21e.tgz}
-    version: 1.5.2
+  '@earendil-works/pi-durable@1.6.0':
+    resolution: {integrity: sha512-nyPjInj/7ZjLEUCDMS7oNGRj1ynftOCVqXilWRBhIuT/xoRHrPy5yFNle/64hvs3F1rukMZ7Ar/4reA7auvUWQ==}
     engines: {node: '>=22.19.0'}
 
-  '@earendil-works/pi-schema@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-schema-1.5.2-0f11f19266f3.tgz':
-    resolution: {integrity: sha512-DxHxkmbzsoCzpWKVyCMoI6UvOnQCOCoIAHTMYZEqsP3ChwXFUZ1Z4dFRIJsu8ItWWq9JZwfYG/p5Rz/Ot9jUWg==, tarball: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-schema-1.5.2-0f11f19266f3.tgz}
-    version: 1.5.2
+  '@earendil-works/pi-schema@1.6.0':
+    resolution: {integrity: sha512-jD0VRCUcFzWQ5zN82pOuoHNN42/3pu4E5krtpiKknvPq4g2m+fuO38lj+xnZhuVpYcd2G0qlmr8lE6ZMzkad7Q==}
     engines: {node: '>=22.19.0'}
 
-  '@earendil-works/pi-telemetry@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-telemetry-1.5.2-9be72e9a322a.tgz':
-    resolution: {integrity: sha512-m+cumjIqNh1aMISi/9ttcG3ZOwIdriPbz/eMyWmRMJCGa/WcgY1RX4lrb7HvsHhSfI/JUeBESA4nOCr8C3y5ow==, tarball: file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-telemetry-1.5.2-9be72e9a322a.tgz}
-    version: 1.5.2
+  '@earendil-works/pi-telemetry@1.6.0':
+    resolution: {integrity: sha512-MNL0TvtpgoSfX7mBLSVgzxTW6yvT8VLEpHvbWnZsIp92FtqVvx+4q9DxWZdX8KvcQqBs0GseAgVnLdVFinjN9Q==}
     engines: {node: '>=22.19.0'}
 
   '@electron-internal/extract-zip@1.0.8':
@@ -735,6 +717,86 @@ packages:
     resolution: {integrity: sha512-1DpKU0Z5ThltBwjNySMC14g0CkbyhCaz9FkhxqNsZI6uAPJXFS8cMXlBKo26FJ8ZuW6S9GCMcR9IO5k2X5/9Fg==}
     engines: {node: '>= 12.13.0'}
 
+  '@napi-rs/image-android-arm64@1.16.0':
+    resolution: {integrity: sha512-pwn/41RoGaE0gHlJBvEIikYXASeiHhs1lyo5+fWZZSXsS9hpJt0zQqWiSr7cCdCwLdg84pQwPbqd32Kp+scLSw==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [android]
+
+  '@napi-rs/image-darwin-arm64@1.16.0':
+    resolution: {integrity: sha512-JJesjwlmWA9m0iN4y0GvHpfZkgAviU4Yhk+qvV+D44obYPisqAhJdMCQMY1/u8Yj/PblijimCMY05fMRvCmrdQ==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@napi-rs/image-darwin-x64@1.16.0':
+    resolution: {integrity: sha512-EV/SHAnsIoadlJdyeSVtHo2RE+N6BAWTK6S3y52vvCF8/s3z38fe9o1tbk40xxPpcSXdu+gh6ASBeFHic2/NOQ==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@napi-rs/image-freebsd-x64@1.16.0':
+    resolution: {integrity: sha512-2Q2XcPqeFfr5U8oL9zwZgbnfJLvFrA85+XPaOgjaUiIhEFfRKDgp5l7R0jDFZvymCw0ljMKtVzUD+Id2LUQasg==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@napi-rs/image-linux-arm-gnueabihf@1.16.0':
+    resolution: {integrity: sha512-qOXhoEXK66U396sBtL1wDvho4yooW6EPse0Ue23kRHlRHbR6SiDKz6mKcEoB1MrQzZGeKOYRh2F9rk0iHlsPiw==}
+    engines: {node: '>= 10'}
+    cpu: [arm]
+    os: [linux]
+
+  '@napi-rs/image-linux-arm64-gnu@1.16.0':
+    resolution: {integrity: sha512-S0j/r3ciH+WW/NnsOaLwhol0wly0x0YtljZnfQ4o1YCfkVrcAPMQGgGmPyjKIG/TLQ8tqPd6liuUL4Nms017lA==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@napi-rs/image-linux-arm64-musl@1.16.0':
+    resolution: {integrity: sha512-ILcos5cDYUQw6h2aty8BBlm5B4l4I5y52i0tSSU44HBM8tmGE6sUU1DREPfMx1NLhB2HX4xu1Y9DNQq7tIXhpQ==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@napi-rs/image-linux-x64-gnu@1.16.0':
+    resolution: {integrity: sha512-R2LnMJzHxztTYyySZnyWIiZmDxgK7pq8DWYT1jAuryCXcGmhUhM14BgEnQKj5h3zvDVbtf1czm6DSD9f8PDl4g==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@napi-rs/image-linux-x64-musl@1.16.0':
+    resolution: {integrity: sha512-UXcwFSIEEHia8/JhJO6H3uehQmTrsG8UK8tpD1qpzi8WHxUVgLJyuoVS3zKm8cmqlYq0No1cyqU6h2OnArShOw==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@napi-rs/image-win32-arm64-msvc@1.16.0':
+    resolution: {integrity: sha512-C1lmWAajIqkiYyVb0aBz0svCWIbzFAT6YpNoQ/QC/QsyNaQ602WSLSoq4ixnNhBPQrlro/Va3n/KANv4iqp4GA==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@napi-rs/image-win32-ia32-msvc@1.16.0':
+    resolution: {integrity: sha512-j6OMycTmw47pY4m3yw4FnurkikzA8r36xgtbHqxsXWg1TGdY2uQq37Or56USNjLIeA6Oyv4az5YXc7L1oVv03w==}
+    engines: {node: '>= 10'}
+    cpu: [ia32]
+    os: [win32]
+
+  '@napi-rs/image-win32-x64-msvc@1.16.0':
+    resolution: {integrity: sha512-jdmbjZhvR1T++hTZpi5CYASA+2Js9tuUQGtQ0fVtrtbGt82sGkYrrax8gAVNsgyvEu9/B2yxbB/4mlJcXkwt0Q==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [win32]
+
+  '@napi-rs/image@1.16.0':
+    resolution: {integrity: sha512-kciiEskvG7m6t0+VwJ/dUT5Zn79mKr1/RAAmjvG8TfK6aG9dI1lZqohtt8QGSQjdhRkyYJ85YKW686gQGFgzWw==}
+    engines: {node: '>= 10'}
+
   '@napi-rs/wasm-runtime@1.2.6':
     resolution: {integrity: sha512-mRyDmEw9/fCDXCGfL1sbgIw/GUK0PVxRW4YwgPN61F3LQ+fSyoBFarJVzgGyhF6kRzEQZ0FejDqm4WLXSeqQmw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=23.5.0}
@@ -742,9 +804,8 @@ packages:
       '@emnapi/core': ^1.7.1 || 2.0.0-beta.2
       '@emnapi/runtime': ^1.7.1 || 2.0.0-beta.2
 
-  '@nimiplatform/app-tools@file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-app-tools-0.16.0-rc.10.tgz':
-    resolution: {integrity: sha512-RGKGw0TlLyb3teX0NJRobzktEY4FisnJC7jC9UFrRfKyRs5AfeS90l/ODnSIBtqz1x1a3iC3nBXnpr/XDnCx5g==, tarball: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-app-tools-0.16.0-rc.10.tgz}
-    version: 0.16.0-rc.10
+  '@nimiplatform/app-tools@0.16.0-rc.12':
+    resolution: {integrity: sha512-hHaQC7YdTnKwZEcg7LyQkFCc/alNPqy+wITrllfKka8iovarxVC1yl72VaBGGPo0Hgtrg8fDuRbXMX7F7g3pZQ==}
     engines: {node: '>=24.22.3 <25.0.0'}
     hasBin: true
     peerDependencies:
@@ -753,9 +814,8 @@ packages:
       vite:
         optional: true
 
-  '@nimiplatform/kit-protected-local-darwin-arm64@file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-protected-local-darwin-arm64-0.24.0-rc.16.tgz':
-    resolution: {integrity: sha512-Jy0PUWdv1pOQ7/Ze16WBf7dg1GCX+suhnTeN/mKKQ98jTNCr3ySM7gPoJht9mPYtTX59crsnCzvXgmdlGhbxlg==, tarball: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-protected-local-darwin-arm64-0.24.0-rc.16.tgz}
-    version: 0.24.0-rc.16
+  '@nimiplatform/kit-protected-local-darwin-arm64@0.24.0-rc.16':
+    resolution: {integrity: sha512-0qQvUNn9/QsHyYuXDobfEDv+tICcgpIboo0JTgNUF3NJdgIkAhD1FFhtzrhdRMbWygSI1TrIHHInRMymth6IOg==}
     engines: {node: ^22.23.4 || ^24.22.1 || ^26.12.1}
     cpu: [arm64]
     os: [darwin]
@@ -765,9 +825,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@nimiplatform/kit@file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-0.24.0-rc.16.tgz':
-    resolution: {integrity: sha512-rjZLi9gpwdTmBntutdIYHalCWpqIcH5010NR8RQAOCh0lbse1/Ftn+8oieCUO8tmtAD8QoPQVHVQyrbNV7r/uA==, tarball: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-0.24.0-rc.16.tgz}
-    version: 0.24.0-rc.16
+  '@nimiplatform/kit@0.24.0-rc.16':
+    resolution: {integrity: sha512-2UBTesCWfraLNZyzdBnWZnidTju8anFhltSip0tnKpLiFL1GpM+z+lZEgx07i9OdXc6YZaoQj5MEpl2xSuueBg==}
     peerDependencies:
       '@capacitor/app': ^8.0.0
       '@capacitor/browser': ^8.0.0
@@ -798,9 +857,8 @@ packages:
     engines: {node: '>=24.0.0', pnpm: '>=10.0.0'}
     hasBin: true
 
-  '@nimiplatform/sdk@file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-sdk-0.24.0-rc.11.tgz':
-    resolution: {integrity: sha512-hf4mugyZjXeBNYLgzBujGVasxwHEs3SGpv4Aocmd2fjILqMQN86rSEgVqQfSfNzTC81AKzUW+JIvxlgz8crnhA==, tarball: file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-sdk-0.24.0-rc.11.tgz}
-    version: 0.24.0-rc.11
+  '@nimiplatform/sdk@0.24.0-rc.10':
+    resolution: {integrity: sha512-3GSniN48FoXrhBfSGSN/+h3PyuhfPBlkJ7MBzy9AE6xV2O6n3a5o32qYM0oyU1zD5soMLCUhGuQab4ZMXbfn3A==}
     peerDependencies:
       '@grpc/grpc-js': ^1.14.4
     peerDependenciesMeta:
@@ -2198,13 +2256,14 @@ packages:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
     engines: {node: '>=12'}
 
-  openai@7.19.0:
-    resolution: {integrity: sha512-MX2s3u2L5racTO0CC/SWpCOasJQBCJrqLKXK+l82cAhdeF8mPMBEe/gxMm0ZFa2xpKpOFLRjxv5afYEZbBXmbQ==}
+  openai@7.59.0:
+    resolution: {integrity: sha512-wPYKJkLPFEdNJ2tThSg4jE1Ptsv4X3u8g8LIvu0Qz/UIhsKeCzl73rl48PtQsDVrJL/ku0liXOsbyd2TsRsPJw==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       '@aws-sdk/credential-provider-node': '>=3.972.0 <4'
       '@smithy/hash-node': '>=4.3.0 <5'
       '@smithy/signature-v4': '>=5.4.0 <6'
+      google-auth-library: '>=9.15.1 <12'
       undici: '>=5 <9'
       ws: ^8.21.0
       zod: ^3.25 || ^4.0
@@ -2214,6 +2273,8 @@ packages:
       '@smithy/hash-node':
         optional: true
       '@smithy/signature-v4':
+        optional: true
+      google-auth-library:
         optional: true
       undici:
         optional: true
@@ -2947,26 +3008,26 @@ snapshots:
     dependencies:
       tslib: 2.9.1
 
-  '@earendil-works/chord@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-chord-1.5.2-6d43da90f2bb.tgz(esbuild@0.28.2)(react@19.3.1)(ws@8.23.0)':
+  '@earendil-works/chord@1.6.0(esbuild@0.28.2)(react@19.3.1)(ws@8.23.0)':
     dependencies:
-      '@earendil-works/pi-schema': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-schema-1.5.2-0f11f19266f3.tgz
-      '@earendil-works/pi-telemetry': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-telemetry-1.5.2-9be72e9a322a.tgz
+      '@earendil-works/pi-schema': 1.6.0
+      '@earendil-works/pi-telemetry': 1.6.0
     optionalDependencies:
       esbuild: 0.28.2
       react: 19.3.1
       ws: 8.23.0
 
-  '@earendil-works/pi-ai@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-ai-1.5.2-ccbb1a0a849b.tgz(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)':
+  '@earendil-works/pi-ai@1.6.0(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(google-auth-library@10.9.1)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)':
     dependencies:
       '@anthropic-ai/sdk': 0.129.0(zod@4.6.7)
       '@aws-sdk/client-bedrock-runtime': 3.1127.0
-      '@earendil-works/pi-schema': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-schema-1.5.2-0f11f19266f3.tgz
-      '@earendil-works/pi-telemetry': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-telemetry-1.5.2-9be72e9a322a.tgz
+      '@earendil-works/pi-schema': 1.6.0
+      '@earendil-works/pi-telemetry': 1.6.0
       '@google/genai': 2.32.0
       '@smithy/node-http-handler': 4.12.1
       http-proxy-agent: 9.1.0
       https-proxy-agent: 9.1.0
-      openai: 7.19.0(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)
+      openai: 7.59.0(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(google-auth-library@10.9.1)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)
       partial-json: 0.1.7
     transitivePeerDependencies:
       - '@aws-sdk/credential-provider-node'
@@ -2974,6 +3035,7 @@ snapshots:
       - '@smithy/hash-node'
       - '@smithy/signature-v4'
       - bufferutil
+      - google-auth-library
       - kerberos
       - supports-color
       - undici
@@ -2981,17 +3043,17 @@ snapshots:
       - ws
       - zod
 
-  '@earendil-works/pi-codemode@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-codemode-1.5.2-1e8650e346bd.tgz':
+  '@earendil-works/pi-codemode@1.6.0':
     dependencies:
       quickjs-wasi: 3.6.2
 
-  '@earendil-works/pi-durable@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-durable-1.5.2-9654b8f2a21e.tgz(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(esbuild@0.28.2)(react@19.3.1)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)':
+  '@earendil-works/pi-durable@1.6.0(patch_hash=59b7d8092f846c02449b1520cdffc742d7e3071e83cbf29be67871641f2b6428)(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(esbuild@0.28.2)(google-auth-library@10.9.1)(react@19.3.1)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)':
     dependencies:
-      '@earendil-works/chord': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-chord-1.5.2-6d43da90f2bb.tgz(esbuild@0.28.2)(react@19.3.1)(ws@8.23.0)
-      '@earendil-works/pi-ai': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-ai-1.5.2-ccbb1a0a849b.tgz(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)
-      '@earendil-works/pi-codemode': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-codemode-1.5.2-1e8650e346bd.tgz
-      '@earendil-works/pi-schema': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-schema-1.5.2-0f11f19266f3.tgz
-      '@earendil-works/pi-telemetry': file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-telemetry-1.5.2-9be72e9a322a.tgz
+      '@earendil-works/chord': 1.6.0(esbuild@0.28.2)(react@19.3.1)(ws@8.23.0)
+      '@earendil-works/pi-ai': 1.6.0(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(google-auth-library@10.9.1)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7)
+      '@earendil-works/pi-codemode': 1.6.0
+      '@earendil-works/pi-schema': 1.6.0
+      '@earendil-works/pi-telemetry': 1.6.0
       '@silvia-odwyer/photon': 0.3.3
       diff: 8.0.4
     transitivePeerDependencies:
@@ -3001,6 +3063,7 @@ snapshots:
       - '@smithy/signature-v4'
       - bufferutil
       - esbuild
+      - google-auth-library
       - kerberos
       - react
       - supports-color
@@ -3009,9 +3072,9 @@ snapshots:
       - ws
       - zod
 
-  '@earendil-works/pi-schema@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-schema-1.5.2-0f11f19266f3.tgz': {}
+  '@earendil-works/pi-schema@1.6.0': {}
 
-  '@earendil-works/pi-telemetry@file:../../nimi/.nimi/local/harness-implementation/pi-request-budget-20261118/tarballs/earendil-works-pi-telemetry-1.5.2-9be72e9a322a.tgz': {}
+  '@earendil-works/pi-telemetry@1.6.0': {}
 
   '@electron-internal/extract-zip@1.0.8': {}
 
@@ -3439,6 +3502,57 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
 
+  '@napi-rs/image-android-arm64@1.16.0':
+    optional: true
+
+  '@napi-rs/image-darwin-arm64@1.16.0':
+    optional: true
+
+  '@napi-rs/image-darwin-x64@1.16.0':
+    optional: true
+
+  '@napi-rs/image-freebsd-x64@1.16.0':
+    optional: true
+
+  '@napi-rs/image-linux-arm-gnueabihf@1.16.0':
+    optional: true
+
+  '@napi-rs/image-linux-arm64-gnu@1.16.0':
+    optional: true
+
+  '@napi-rs/image-linux-arm64-musl@1.16.0':
+    optional: true
+
+  '@napi-rs/image-linux-x64-gnu@1.16.0':
+    optional: true
+
+  '@napi-rs/image-linux-x64-musl@1.16.0':
+    optional: true
+
+  '@napi-rs/image-win32-arm64-msvc@1.16.0':
+    optional: true
+
+  '@napi-rs/image-win32-ia32-msvc@1.16.0':
+    optional: true
+
+  '@napi-rs/image-win32-x64-msvc@1.16.0':
+    optional: true
+
+  '@napi-rs/image@1.16.0':
+    optionalDependencies:
+      '@napi-rs/image-android-arm64': 1.16.0
+      '@napi-rs/image-darwin-arm64': 1.16.0
+      '@napi-rs/image-darwin-x64': 1.16.0
+      '@napi-rs/image-freebsd-x64': 1.16.0
+      '@napi-rs/image-linux-arm-gnueabihf': 1.16.0
+      '@napi-rs/image-linux-arm64-gnu': 1.16.0
+      '@napi-rs/image-linux-arm64-musl': 1.16.0
+      '@napi-rs/image-linux-x64-gnu': 1.16.0
+      '@napi-rs/image-linux-x64-musl': 1.16.0
+      '@napi-rs/image-win32-arm64-msvc': 1.16.0
+      '@napi-rs/image-win32-ia32-msvc': 1.16.0
+      '@napi-rs/image-win32-x64-msvc': 1.16.0
+
   '@napi-rs/wasm-runtime@1.2.6(@emnapi/core@2.0.0-beta.2)(@emnapi/runtime@2.0.0-beta.2)':
     dependencies:
       '@emnapi/core': 2.0.0-beta.2
@@ -3446,8 +3560,9 @@ snapshots:
       '@tybys/wasm-util': 0.10.5
     optional: true
 
-  '@nimiplatform/app-tools@file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-app-tools-0.16.0-rc.10.tgz(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))':
+  '@nimiplatform/app-tools@0.16.0-rc.12(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))':
     dependencies:
+      '@napi-rs/image': 1.16.0
       pngjs: 7.0.0
       semver: 7.8.6
       typescript: 6.0.3
@@ -3455,16 +3570,16 @@ snapshots:
     optionalDependencies:
       vite: 8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
 
-  '@nimiplatform/kit-protected-local-darwin-arm64@file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-protected-local-darwin-arm64-0.24.0-rc.16.tgz':
+  '@nimiplatform/kit-protected-local-darwin-arm64@0.24.0-rc.16':
     optional: true
 
   '@nimiplatform/kit-protected-local-win32-x64@0.24.0-rc.16':
     optional: true
 
-  '@nimiplatform/kit@file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-0.24.0-rc.16.tgz(@capacitor/app@8.1.2(@capacitor/core@8.6.0))(@capacitor/browser@8.0.5(@capacitor/core@8.6.0))(@capacitor/core@8.6.0)(@tauri-apps/api@2.12.4)(@types/node@24.19.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(electron@45.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@nimiplatform/kit@0.24.0-rc.16(@capacitor/app@8.1.2(@capacitor/core@8.6.0))(@capacitor/browser@8.0.5(@capacitor/core@8.6.0))(@capacitor/core@8.6.0)(@tauri-apps/api@2.12.4)(@types/node@24.19.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(electron@45.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@grpc/grpc-js': 1.14.7
-      '@nimiplatform/sdk': file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-sdk-0.24.0-rc.11.tgz(@grpc/grpc-js@1.14.7)
+      '@nimiplatform/sdk': 0.24.0-rc.10(@grpc/grpc-js@1.14.7)
       '@radix-ui/react-avatar': 1.3.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-dialog': 1.3.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-popover': 1.3.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -3492,7 +3607,7 @@ snapshots:
       '@capacitor/app': 8.1.2(@capacitor/core@8.6.0)
       '@capacitor/browser': 8.0.5(@capacitor/core@8.6.0)
       '@capacitor/core': 8.6.0
-      '@nimiplatform/kit-protected-local-darwin-arm64': file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-kit-protected-local-darwin-arm64-0.24.0-rc.16.tgz
+      '@nimiplatform/kit-protected-local-darwin-arm64': 0.24.0-rc.16
       '@nimiplatform/kit-protected-local-win32-x64': 0.24.0-rc.16
       '@tauri-apps/api': 2.12.4
       electron: 45.4.1
@@ -3509,7 +3624,7 @@ snapshots:
       typescript: 5.9.3
       yaml: 2.9.1
 
-  '@nimiplatform/sdk@file:../../nimi/.nimi/local/harness-implementation/platform-unified-20261121-v3/nimiplatform-sdk-0.24.0-rc.11.tgz(@grpc/grpc-js@1.14.7)':
+  '@nimiplatform/sdk@0.24.0-rc.10(@grpc/grpc-js@1.14.7)':
     dependencies:
       '@protobuf-ts/runtime': 2.11.1
     optionalDependencies:
@@ -5005,10 +5120,11 @@ snapshots:
       is-docker: 2.2.1
       is-wsl: 2.2.0
 
-  openai@7.19.0(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7):
+  openai@7.59.0(@aws-sdk/credential-provider-node@3.972.97)(@smithy/signature-v4@5.7.5)(google-auth-library@10.9.1)(undici@7.30.2)(ws@8.23.0)(zod@4.6.7):
     optionalDependencies:
       '@aws-sdk/credential-provider-node': 3.972.97
       '@smithy/signature-v4': 5.7.5
+      google-auth-library: 10.9.1
       undici: 7.30.2
       ws: 8.23.0
       zod: 4.6.7

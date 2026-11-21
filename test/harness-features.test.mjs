@@ -110,7 +110,9 @@ test('local workspace binding, expanded previews, containment, and safe delete p
   const folder = join(homedir(), '.nimi-harness', namespace);
   const userProject = await mkdtemp(join(tmpdir(), 'harness-user-project-'));
   const outsideDir = await mkdtemp(join(tmpdir(), 'harness-outside-'));
+  let harness;
   t.after(async () => {
+    await harness?.close();
     await rm(folder, { recursive: true, force: true });
     await rm(userProject, { recursive: true, force: true });
     await rm(outsideDir, { recursive: true, force: true });
@@ -154,8 +156,7 @@ test('local workspace binding, expanded previews, containment, and safe delete p
     };
   });
 
-  const harness = await openHarness(services, new AbortController().signal);
-  t.after(() => harness.close());
+  harness = await openHarness(services, new AbortController().signal);
 
   await harness.create(undefined, userProject);
   const created = await harness.snapshot();
@@ -176,7 +177,9 @@ test('permission modes (strict, workspace-edit, plan-readonly), session allowlis
   const namespace = randomUUID();
   const folder = join(homedir(), '.nimi-harness', namespace);
   const outsideFile = join(tmpdir(), `harness-outside-${randomUUID()}.txt`);
+  let harness;
   t.after(async () => {
+    await harness?.close();
     await rm(folder, { recursive: true, force: true });
     await rm(outsideFile, { force: true });
   });
@@ -224,8 +227,7 @@ test('permission modes (strict, workspace-edit, plan-readonly), session allowlis
     };
   });
 
-  let harness = await openHarness(services, new AbortController().signal);
-  t.after(async () => harness?.close());
+  harness = await openHarness(services, new AbortController().signal);
 
   // 1. Reasoning choices & effort pass-through
   const initial = await harness.snapshot();

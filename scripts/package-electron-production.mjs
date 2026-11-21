@@ -117,6 +117,7 @@ try {
     // Staging sits inside the project: keep pnpm from adopting an enclosing workspace.
     await writeFile(path.join(productionSourceRoot, 'pnpm-workspace.yaml'), stringifyYaml({ packages: ['.'] }));
   }
+  await cp(path.join(appRoot, 'patches'), path.join(productionSourceRoot, 'patches'), { recursive: true, force: false });
   await cp(path.join(appRoot, 'dist'), path.join(productionSourceRoot, 'dist'), { recursive: true, force: false });
   await copyFile(path.join(appRoot, 'dist-electron', 'main.js'), path.join(productionSourceRoot, 'dist-electron', 'main.js'));
   await copyFile(path.join(appRoot, 'dist-electron', 'preload.cjs'), path.join(productionSourceRoot, 'dist-electron', 'preload.cjs'));
@@ -131,6 +132,7 @@ try {
   await writeFile(productionManifestPath, `${JSON.stringify(productionManifest, null, 2)}\n`);
   await rm(path.join(productionSourceRoot, 'pnpm-lock.yaml'));
   await rm(path.join(productionSourceRoot, 'pnpm-workspace.yaml'), { force: true });
+  await rm(path.join(productionSourceRoot, 'patches'), { recursive: true, force: true });
 
   const installedNativePackage = path.join(productionSourceRoot, 'node_modules', ...NATIVE_BINDING_PACKAGE.split('/'));
   const nativeDestination = MACOS_BUILD

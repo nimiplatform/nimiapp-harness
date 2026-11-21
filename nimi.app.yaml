@@ -1,4 +1,5 @@
 app_id: ai.nimi.harness
+public_slug: harness
 display_name: Nimi Harness
 version: 0.2.0
 profile: standalone
@@ -12,6 +13,29 @@ capability_contract_refs:
   - text.generate
   - audio.transcribe
 required_standardized_feature_refs: []
+safety_profile:
+  intended_audience: general
+  content_descriptors: []
+  ai:
+    direct_interaction: true
+    interaction_notice: absent
+    risk_features: []
+    subject_notice: not-applicable
+    outputs:
+      - modality: text
+        exposure: exportable
+        publication_control: not-applicable
+        in_product_notice: absent
+        export_visible_marking: absent
+        machine_readable_marking: absent
+  data_practices:
+    publisher_direct_external_network: false
+    telemetry: []
+    third_party_account: none
+    user_content_sharing: none
+    commercial_features: []
+    sensitive_data_categories: []
+  high_impact_decision_uses: []
 storage_policy:
   kind: app-owned-os-storage
   os_storage_disclosure:
@@ -19,9 +43,89 @@ storage_policy:
       purpose: Account-partitioned session transcripts and working files.
       expected_size_band: Depends on the size and number of tasks.
 metadata:
-  summary: A desktop assistant for working with files and Nimi models.
+  summary: A desktop and remote AI workspace for multi-step code, document, and file tasks with transparent model routing and step-by-step tool approval.
   icon: assets/app-icon.png
   release_notes: RELEASE_NOTES.md
+  author: Nimi Platform
+  homepage_url: https://github.com/nimiplatform/nimiapp-harness
+  support_url: https://github.com/nimiplatform/nimiapp-harness/issues
+  storefront:
+    category: developer-tools
+    default_locale: en
+    locales:
+      en:
+        tags:
+          - AI Workspace
+          - File Automation
+          - Tool Approval
+          - Local & Cloud
+          - Remote Companion
+        highlights:
+          - title: Step-by-Step Tool Approval
+            description: Review unified file diffs and commands before choosing Allow once, Allow for session, Request changes, or Decline.
+          - title: Transparent Cloud & Local Models
+            description: Switch per session between Nimi Home Cloud connectors, on-device local models, and saved configs with reasoning controls.
+          - title: Durable Multi-Session Workspaces
+            description: Bind local folders or use isolated session directories with SQLite persistence, file previews, and Markdown export.
+          - title: Remote Web Companion
+            description: Connect from a browser to your online PC Harness to submit tasks, approve diffs, and download workspace files.
+      zh:
+        display_name: Nimi Harness
+        summary: 面向多步骤代码、文档与本地文件任务的桌面及远程 AI 工作台，支持透明模型切换与逐步工具审批。
+        introduction: NIMI_APP.zh.md
+        tags:
+          - AI 工作台
+          - 文件协作
+          - 工具审批
+          - 本机与云端
+          - 远程伴侣
+        highlights:
+          - title: 逐步可控的工具审批
+            description: 写入、编辑与命令执行前展示清晰 diff 预览，支持按次放行、本会话放行、退回修改或拒绝。
+          - title: 透明的云端与本机模型切换
+            description: 按会话在 Nimi Home 云端连接器、本机模型与已保存配置间自由切换，并支持推理强度调节。
+          - title: 持久化多会话工作区
+            description: 支持绑定本地项目目录或独立会话目录，内置 SQLite 持久化、实时文件预览与 Markdown 导出。
+          - title: 网页远程伴侣协同
+            description: 通过浏览器连接在线 PC 端 Nimi Harness，远程提交任务、审批文件变更并下载工作区产物。
+    media:
+      cover:
+        path: assets/storefront/cover-en.webp
+        locales:
+          zh: assets/storefront/cover-zh.webp
+      gallery:
+        - id: tool-approval
+          kind: image
+          path: assets/storefront/tool-approval-en.webp
+          locales:
+            zh: assets/storefront/tool-approval-zh.webp
+          caption:
+            en: "Step-by-step tool approval: inspect unified file diffs before choosing Allow once, Allow for session, or Request changes"
+            zh: 逐步审批与差异预览：在写入、编辑或执行命令前审阅 diff，按次放行、本会话放行或提出修改意见
+        - id: model-picker
+          kind: image
+          path: assets/storefront/model-picker-en.webp
+          locales:
+            zh: assets/storefront/model-picker-zh.webp
+          caption:
+            en: "Per-session model routing: switch across Nimi Home Cloud connectors, on-device local models, and saved configurations"
+            zh: 按会话选择模型：在 Nimi Home 云端连接器、本机模型与已保存配置之间快速切换并调整推理强度
+        - id: workspace-files
+          kind: image
+          path: assets/storefront/workspace-files-en.webp
+          locales:
+            zh: assets/storefront/workspace-files-zh.webp
+          caption:
+            en: "Workspace files & permission modes: browse bound project folders and switch between Strict, Auto-Edit, and Plan Only modes"
+            zh: 工作区文件与权限模式：浏览绑定目录并在严格审批、自动编辑与只读规划模式间按需切换
+        - id: web-companion
+          kind: image
+          path: assets/storefront/web-companion-en.webp
+          locales:
+            zh: assets/storefront/web-companion-zh.webp
+          caption:
+            en: "Remote Web companion: connect to your PC Harness from a browser to follow live progress, approve proposals, and download files"
+            zh: 网页远程伴侣：从浏览器连接主 PC 会话，查看实时进度、审批工具提案并下载工作区文件
 local_development:
   mobile:
     command: pnpm run dev:android

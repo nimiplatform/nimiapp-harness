@@ -37,8 +37,10 @@ export function transcriptionTools(
         if (bytes.byteLength !== size) throw new Error('The recording changed while reading. Choose it again.');
       } finally { await reader.close(context); }
       signal.throwIfAborted();
-      const configRef = getConfigRef?.();
-      const runtime = { ai: createNimiLocalAppRuntimeScenarioJobClient(ai, configRef ? { configRef } : undefined) };
+      // Published @nimiplatform/sdk@0.24.0-rc.10 binds audio.transcribe scenario jobs
+      // to the App's default AIConfig record (per-session configRef arrives in sdk 0.24.0-rc.11).
+      void getConfigRef;
+      const runtime = { ai: createNimiLocalAppRuntimeScenarioJobClient(ai) };
       const result = await runRuntimeSpeechTranscribe({ runtime, appId: 'ai.nimi.harness', surfaceId: 'harness.conversations',
         scenarioId: `${sessionId}-${api.taskId}`, audio: { type: 'bytes', bytes, mimeType }, signal,
         abortReason: 'Harness transcription stopped.' });

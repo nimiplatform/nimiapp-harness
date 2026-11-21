@@ -6,13 +6,6 @@
   "type": "module",
   "main": "dist-electron/main.js",
   "packageManager": "pnpm@10.34.7",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "electron",
-      "esbuild",
-      "protobufjs"
-    ]
-  },
   "scripts": {
     "dev": "nimi-app dev --shell electron",
     "dev:renderer": "vite --host 127.0.0.1 --port 1509 --strictPort",
@@ -33,21 +26,22 @@
     "dev:web": "nimi-app dev --platform web",
     "dev:web-renderer": "vite --config vite.web.config.ts",
     "build:web": "tsc --noEmit && vite build --config vite.web.config.ts --mode web-release",
+    "build:web:release": "tsc --noEmit && vite build --config vite.web.config.ts --mode web-release",
     "build:mobile": "tsc --noEmit && vite build --config vite.mobile.config.ts",
     "sync:android": "pnpm build:mobile && cap sync android",
     "dev:mobile": "nimi-app dev --platform mobile",
     "dev:android": "pnpm sync:android && node scripts/dev-android.mjs"
   },
   "dependencies": {
-    "@earendil-works/chord": "1.5.2",
-    "@earendil-works/pi-ai": "1.5.2",
-    "@earendil-works/pi-durable": "1.5.2",
-    "@earendil-works/pi-schema": "1.5.2",
+    "@earendil-works/chord": "1.6.0",
+    "@earendil-works/pi-ai": "1.6.0",
+    "@earendil-works/pi-durable": "1.6.0",
+    "@earendil-works/pi-schema": "1.6.0",
+    "@nimiplatform/kit": "^0.24.0-rc.16",
+    "@nimiplatform/sdk": "^0.24.0-rc.10",
     "lucide-react": "^1.61.0",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "@nimiplatform/sdk": "^0.24.0-rc.10",
-    "@nimiplatform/kit": "^0.24.0-rc.16"
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@capacitor/android": "8.6.0",
@@ -56,6 +50,8 @@
     "@capacitor/cli": "8.6.0",
     "@capacitor/core": "8.6.0",
     "@electron/packager": "^20.3.0",
+    "@nimiplatform/app-tools": "^0.16.0-rc.12",
+    "@nimiplatform/nimi-coding": "0.7.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
@@ -67,9 +63,7 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vite": "^8.3.8",
-    "yaml": "^2.9.1",
-    "@nimiplatform/app-tools": "^0.16.0-rc.10",
-    "@nimiplatform/nimi-coding": "0.7.0"
+    "yaml": "^2.9.1"
   },
   "author": "Nimi Platform"
 }
